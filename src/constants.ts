@@ -59,7 +59,7 @@ export const GAS_PRICE_INCREASE_PERCENTAGE = 50; // 50%
 export const DEPOSIT_CHECK_WORD = "I understand";
 
 export const ETH_TOKEN_LOGO_URI =
-  "https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/ethereum-logo.png";
+  "https://www-s.ucloud.cn/2024/01/de9d1e4c3a37f48edf1cd6308885ca02_1705399567120.png";
 
 export const POLYGON_SUPPORT_URL = "https://support.polygon.technology";
 

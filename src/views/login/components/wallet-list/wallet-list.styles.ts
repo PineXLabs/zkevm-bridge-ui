@@ -5,7 +5,7 @@ import { Theme } from "src/styles/theme";
 export const useWalletListStyles = createUseStyles((theme: Theme) => ({
   wallet: {
     "&:hover": {
-      background: "#e2e5ee",
+      background: "rgba(49, 49, 59, 0.5)",
     },
     alignItems: "center",
     cursor: "pointer",

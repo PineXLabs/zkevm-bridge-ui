@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 
 import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
 import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
+import tokenIconDefaultUrl from "src/assets/icons/tokens/erc20-icon.svg";
 import { Chain, Currency, EthereumChain, ProviderError, Token, ZkEVMChain } from "src/domain";
 import { ProofOfEfficiency__factory } from "src/types/contracts/proof-of-efficiency";
 import { getEthereumNetworkName } from "src/utils/labels";
@@ -77,6 +78,8 @@ export const TOKEN_BLACKLIST = [
   "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
 ];
 
+export const SEPOLIA_USDC_ADDRESS = "0xd9aac0446f93F26ee76BF2A38701AC5e11CbDBb6";
+
 export const getChains = ({
   ethereum,
   polygonZkEVM,
@@ -116,7 +119,7 @@ export const getChains = ({
       nativeCurrency: {
         decimals: 18,
         name: "Ether",
-        symbol: "ETH",
+        symbol: "SUSDC",
       },
       networkId: 0,
       poeContractAddress: ethereum.poeContractAddress,
@@ -132,7 +135,7 @@ export const getChains = ({
       nativeCurrency: {
         decimals: 18,
         name: "Ether",
-        symbol: "ETH",
+        symbol: "SUSDC",
       },
       networkId: polygonZkEVM.networkId,
       provider: polygonZkEVMProvider,
@@ -140,14 +143,26 @@ export const getChains = ({
   ]);
 };
 
+// ether token改成 Sepolia USDC 的样式
 export const getEtherToken = (chain: Chain): Token => {
   return {
     address: ethers.constants.AddressZero,
     chainId: chain.chainId,
     decimals: 18,
-    logoURI: ETH_TOKEN_LOGO_URI,
-    name: "Ether",
-    symbol: "ETH",
+    logoURI: tokenIconDefaultUrl,
+    name: "Sepolia USDC",
+    symbol: "SUSDC",
+  };
+};
+
+export const getSepoliaToken = (chain: Chain): Token => {
+  return {
+    address: SEPOLIA_USDC_ADDRESS,
+    chainId: chain.chainId,
+    decimals: 18,
+    logoURI: tokenIconDefaultUrl,
+    name: "Sepolia USDC",
+    symbol: "SUSDC",
   };
 };
 

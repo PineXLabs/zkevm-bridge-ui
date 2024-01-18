@@ -138,6 +138,7 @@ export const TokenList: FC<TokenListProps> = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSearchInputchange = (value: string): void => {
     setSearchInputValue(value);
     updateTokenList(tokens, value);
@@ -172,7 +173,8 @@ export const TokenList: FC<TokenListProps> = ({
   return (
     <div className={classes.tokenList}>
       <TokenSelectorHeader onClose={onClose} title="Select token" />
-      <div className={classes.searchInputContainer}>
+      {/* 隐藏搜索功能 */}
+      {/* <div className={classes.searchInputContainer}>
         <MagnifyingGlassIcon className={classes.searchIcon} />
         <input
           className={classes.searchInput}
@@ -189,7 +191,7 @@ export const TokenList: FC<TokenListProps> = ({
             <XMarkIcon className={classes.clearSearchButtonIcon} />
           </button>
         )}
-      </div>
+      </div> */}
       <div className={classes.list}>
         {customToken.status === "loading" ? (
           <div className={classes.centeredElement}>

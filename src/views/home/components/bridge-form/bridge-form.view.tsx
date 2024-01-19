@@ -167,8 +167,12 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   useEffect(() => {
     // Load all the tokens for the selected chain without their balance
     //  form 是 zkevm 的时候，token设置回 etherToken
-    if (selectedChains?.from.key === "polygon-zkevm") {
-      setToken(getEtherToken(selectedChains.from));
+    if (selectedChains) {
+      if (selectedChains?.from.key === "polygon-zkevm") {
+        setToken(getEtherToken(selectedChains.from));
+      } else {
+        setToken(getSepoliaToken(selectedChains.from));
+      }
     }
   }, [selectedChains]);
 

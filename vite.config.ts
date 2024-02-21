@@ -28,5 +28,6 @@ export default defineConfig({
   },
   server: {
     open: false,
+    host: true,
   },
 });

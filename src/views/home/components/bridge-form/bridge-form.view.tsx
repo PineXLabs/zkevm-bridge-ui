@@ -4,13 +4,13 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { addCustomToken, getChainCustomTokens, removeCustomToken } from "src/adapters/storage";
 import { ReactComponent as ArrowDown } from "src/assets/icons/arrow-down.svg";
 import { ReactComponent as CaretDown } from "src/assets/icons/caret-down.svg";
-import { getEtherToken } from "src/constants";
+import { getEtherToken, getSepoliaToken } from "src/constants";
 import { useEnvContext } from "src/contexts/env.context";
 import { useProvidersContext } from "src/contexts/providers.context";
 import { useTokensContext } from "src/contexts/tokens.context";
 import { AsyncTask, Chain, FormData, Token } from "src/domain";
 import { useCallIfMounted } from "src/hooks/use-call-if-mounted";
-import { isTokenEther, selectTokenAddress } from "src/utils/tokens";
+// import { isTokenEther, selectTokenAddress } from "src/utils/tokens";
 import { isAsyncTaskDataAvailable } from "src/utils/types";
 import { AmountInput } from "src/views/home/components/amount-input/amount-input.view";
 import { useBridgeFormStyles } from "src/views/home/components/bridge-form/bridge-form.styles";
@@ -124,15 +124,25 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
 
   const getTokenBalance = useCallback(
     (token: Token, chain: Chain): Promise<BigNumber> => {
-      if (isTokenEther(token)) {
+      if (chain.key === "polygon-zkevm") {
         return chain.provider.getBalance(account);
       } else {
         return getErc20TokenBalance({
           accountAddress: account,
           chain: chain,
-          tokenAddress: selectTokenAddress(token, chain),
+          tokenAddress: "0xd9aac0446f93F26ee76BF2A38701AC5e11CbDBb6",
         });
       }
+
+      //   if (isTokenEther(token)) {
+      //     return chain.provider.getBalance(account);
+      //   } else {
+      //     return getErc20TokenBalance({
+      //       accountAddress: account,
+      //       chain: chain,
+      //       tokenAddress: selectTokenAddress(token, chain),
+      //     });
+      //   }
     },
     [account, getErc20TokenBalance]
   );
@@ -153,6 +163,18 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
       );
     }
   }, [defaultTokens, selectedChains]);
+
+  useEffect(() => {
+    // Load all the tokens for the selected chain without their balance
+    //  form 是 zkevm 的时候，token设置回 etherToken
+    if (selectedChains) {
+      if (selectedChains?.from.key === "polygon-zkevm") {
+        setToken(getEtherToken(selectedChains.from));
+      } else {
+        setToken(getSepoliaToken(selectedChains.from));
+      }
+    }
+  }, [selectedChains]);
 
   useEffect(() => {
     // Load the balances of all the tokens of the primary chain (from)
@@ -228,6 +250,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
           })
         )
         .catch(() => {
+          // console.log(e);
           callIfMounted(() => {
             setBalanceTo({ error: "Couldn't retrieve token balance", status: "failed" });
           });
@@ -243,7 +266,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
 
       if (from && to) {
         setSelectedChains({ from, to });
-        setToken(getEtherToken(from));
+        setToken(getSepoliaToken(from));
       }
       setAmount(undefined);
     }

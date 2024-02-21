@@ -17,7 +17,7 @@ import * as ethereum from "src/adapters/ethereum";
 import { cleanupCustomTokens, getCustomTokens } from "src/adapters/storage";
 import { getEthereumErc20Tokens } from "src/adapters/tokens";
 import tokenIconDefaultUrl from "src/assets/icons/tokens/erc20-icon.svg";
-import { getEtherToken } from "src/constants";
+import { getEtherToken, getSepoliaToken } from "src/constants";
 import { useEnvContext } from "src/contexts/env.context";
 import { useErrorContext } from "src/contexts/error.context";
 import { useProvidersContext } from "src/contexts/providers.context";
@@ -321,7 +321,7 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
               .map((token) => addWrappedToken({ token }))
           )
             .then((chainTokens) => {
-              const tokens = [getEtherToken(ethereumChain), ...chainTokens];
+              const tokens = [getSepoliaToken(ethereumChain), ...chainTokens];
               cleanupCustomTokens(tokens);
               setTokens(tokens);
             })

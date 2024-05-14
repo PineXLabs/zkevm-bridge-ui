@@ -857,6 +857,18 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
         ? await getErc20TokenEncodedMetadata({ chain: from, token })
         : "0x";
 
+      console.log(
+        merkleProof,
+        depositCount,
+        mainExitRoot,
+        rollupExitRoot,
+        tokenOriginNetwork,
+        to.networkId,
+        destinationAddress,
+        amount,
+        metadata
+      );
+
       const executeClaim = () =>
         contract
           .claimAsset(

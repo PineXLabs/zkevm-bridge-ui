@@ -22,7 +22,7 @@ export interface CommonChain {
 
 export type EthereumChain = CommonChain & {
   key: "ethereum";
-  poeContractAddress: string;
+  // poeContractAddress: string;
 };
 
 export type ZkEVMChain = CommonChain & {

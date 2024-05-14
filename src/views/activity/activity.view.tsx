@@ -249,38 +249,43 @@ export const Activity: FC = () => {
   useEffect(() => {
     // Polling lastVerifiedBatch
     if (env) {
-      const ethereum = env.chains[0];
-      const poeContract = ProofOfEfficiency__factory.connect(
-        ethereum.poeContractAddress,
-        ethereum.provider
-      );
-      const refreshLastVerifiedBatch = () => {
-        setLastVerifiedBatch((currentLastVerifiedBatch) =>
-          isAsyncTaskDataAvailable(currentLastVerifiedBatch)
-            ? { data: currentLastVerifiedBatch.data, status: "reloading" }
-            : { status: "loading" }
-        );
-        poeContract
-          .lastVerifiedBatch()
-          .then((newLastVerifiedBatch) => {
-            setLastVerifiedBatch({
-              data: newLastVerifiedBatch,
-              status: "successful",
-            });
-          })
-          .catch(() => {
-            setLastVerifiedBatch({
-              error: "An error occurred getting the last verified batch",
-              status: "failed",
-            });
-          });
-      };
-      refreshLastVerifiedBatch();
-      const intervalId = setInterval(refreshLastVerifiedBatch, AUTO_REFRESH_RATE);
+      // const ethereum = env.chains[0];
+      // // const poeContract = ProofOfEfficiency__factory.connect(
+      // //   // ethereum.poeContractAddress,
+      // //   ethereum.provider
+      // // );
+      // const refreshLastVerifiedBatch = () => {
+      //   setLastVerifiedBatch((currentLastVerifiedBatch) =>
+      //     isAsyncTaskDataAvailable(currentLastVerifiedBatch)
+      //       ? { data: currentLastVerifiedBatch.data, status: "reloading" }
+      //       : { status: "loading" }
+      //   );
+      //   // poeContract
+      //   //   .lastVerifiedBatch()
+      //   //   .then((newLastVerifiedBatch) => {
+      //   //     setLastVerifiedBatch({
+      //   //       data: newLastVerifiedBatch,
+      //   //       status: "successful",
+      //   //     });
+      //   //   })
 
-      return () => {
-        clearInterval(intervalId);
-      };
+      //   setLastVerifiedBatch((currentLastVerifiedBatch) => ({
+      //     data: currentLastVerifiedBatch.data,
+      //     status: "successful",
+      //   }));
+      //   //   .catch(() => {
+      //   //     setLastVerifiedBatch({
+      //   //       error: "An error occurred getting the last verified batch",
+      //   //       status: "failed",
+      //   //     });
+      //   //   });
+      // };
+      // refreshLastVerifiedBatch();
+      // const intervalId = setInterval(refreshLastVerifiedBatch, AUTO_REFRESH_RATE);
+
+      // return () => {
+      //   clearInterval(intervalId);
+      // };
     }
   }, [env]);
 

@@ -89,16 +89,6 @@ export const NetworkBox: FC = () => {
               </ExternalLink>
             </Typography>
           </li>
-          <li className={classes.listItem}>
-            <Typography type="body2">
-              {env.chains[0].name} Smart Contract:{" "}
-              <ExternalLink
-                href={`${ethereumChain.explorerUrl}/address/${ethereumChain.poeContractAddress}`}
-              >
-                {ethereumChain.poeContractAddress}
-              </ExternalLink>
-            </Typography>
-          </li>
         </ul>
         <div className={classes.buttons}>
           <button

@@ -96,16 +96,16 @@ export const getChains = ({
 }): Promise<[EthereumChain, ZkEVMChain]> => {
   const ethereumProvider = new StaticJsonRpcProvider(ethereum.rpcUrl);
   const polygonZkEVMProvider = new StaticJsonRpcProvider(polygonZkEVM.rpcUrl);
-  const poeContract = ProofOfEfficiency__factory.connect(
-    ethereum.poeContractAddress,
-    ethereumProvider
-  );
+  // const poeContract = ProofOfEfficiency__factory.connect(
+  //   ethereum.poeContractAddress,
+  //   ethereumProvider
+  // );
 
   return Promise.all([
     ethereumProvider.getNetwork().catch(() => Promise.reject(ProviderError.Ethereum)),
     polygonZkEVMProvider.getNetwork().catch(() => Promise.reject(ProviderError.PolygonZkEVM)),
-    poeContract.networkName().catch(() => Promise.reject(ProviderError.Ethereum)),
-  ]).then(([ethereumNetwork, polygonZkEVMNetwork, polygonZkEVMNetworkName]) => [
+    // poeContract.networkName().catch(() => Promise.reject(ProviderError.Ethereum)),
+  ]).then(([ethereumNetwork, polygonZkEVMNetwork]) => [
     {
       bridgeContractAddress: ethereum.bridgeContractAddress,
       chainId: ethereumNetwork.chainId,
@@ -128,7 +128,7 @@ export const getChains = ({
       explorerUrl: polygonZkEVM.explorerUrl,
       Icon: PolygonZkEVMChainIcon,
       key: "polygon-zkevm",
-      name: polygonZkEVMNetworkName,
+      name: "polygon-zkevm",
       nativeCurrency: {
         decimals: 18,
         name: "Ether",
